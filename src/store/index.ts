@@ -9,10 +9,16 @@ interface GlobalState {
   rootNode: Node;
   addNode: (node: Node) => void;
   selectedNodeId: string | null;
+  selectedNodeRef: any;
 }
 
 const useStore = create<GlobalState>((set) => ({
   rootNode: generateInitialNodes(),
+  setRootNode: (node: any) =>
+    set((state) => ({
+      rootNode: node,
+    })),
+  selectedNodeRef: null,
   addNode: (id: string) =>
     set((state) => ({
       rootNode: addChildNode(state.rootNode, id),

@@ -14,12 +14,18 @@ export const generateInitialNodes = () => {
       ref: elementRef,
       onClick: (event: any) => {
         event.stopPropagation();
-        console.log("hello");
-        console.log(elementRef);
+        const selectedNodeRef = useStore.getState().selectedNodeRef;
+        if (selectedNodeRef) {
+          const currentSelectedDomNode = selectedNodeRef.current;
+          console.log({ currentSelectedDomNode });
+          currentSelectedDomNode.style.borderColor = "white";
+          currentSelectedDomNode.style.borderWidth = "2px";
+        }
         const domNode: any = elementRef.current;
-        domNode.style.borderColor = "blue";
+        domNode.style.borderColor = "#475569";
         domNode.style.borderWidth = "3px";
         useStore.setState({ selectedNodeId: key });
+        useStore.setState({ selectedNodeRef: elementRef });
       },
       style: {
         width: "500px",
@@ -29,6 +35,8 @@ export const generateInitialNodes = () => {
         position: "relative",
         overflow: "hidden",
         borderWidth: "1px",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
         borderColor: "white",
       },
       children: [
@@ -36,7 +44,7 @@ export const generateInitialNodes = () => {
           type: "div",
           props: {
             key: uuidv4(),
-            children: "root",
+            children: "",
             style: {
               position: "absolute",
               top: 0,

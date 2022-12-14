@@ -6,7 +6,6 @@ import useStore from "../store";
 export const createNode = (parentNode: Node) => {
   const { isRootNode } = parentNode.props;
   const { width, height, flexDirection } = parentNode.props.style;
-  console.log("child wiht", { width, isRootNode });
   const elementRef = React.createRef();
   const key = uuidv4();
   return {
@@ -14,29 +13,36 @@ export const createNode = (parentNode: Node) => {
     props: {
       key,
       ref: elementRef,
-      onClick: (event) => {
+      onClick: (event: any) => {
         event.stopPropagation();
-        console.log("hello");
-        console.log(elementRef);
+        const selectedNodeRef = useStore.getState().selectedNodeRef;
+        if (selectedNodeRef) {
+          const currentSelectedDomNode = selectedNodeRef.current;
+          console.log({ currentSelectedDomNode });
+          currentSelectedDomNode.style.borderColor = "white";
+          currentSelectedDomNode.style.borderWidth = "2px";
+        }
         const domNode: any = elementRef.current;
-        domNode.style.borderColor = "red";
+        domNode.style.borderColor = "#475569";
         domNode.style.borderWidth = "3px";
-        elementRef?.current?.focus();
         useStore.setState({ selectedNodeId: key });
+        useStore.setState({ selectedNodeRef: elementRef });
       },
       style: {
+        flex: !isRootNode ? 1 : null,
         width: !!isRootNode
           ? "100px"
           : flexDirection === "row"
-          ? width / 2
+          ? parseInt(width, 10) / 2
           : width,
         height: !!isRootNode
           ? "100px"
           : flexDirection === "column"
-          ? height / 2
+          ? parseInt(height, 10) / 2
           : height,
         display: "flex",
         flexDirection: "row",
+        overflow: "hidden",
         borderWidth: "1px",
         borderColor: "white",
         position: "relative",
@@ -46,7 +52,7 @@ export const createNode = (parentNode: Node) => {
           type: "div",
           props: {
             key: uuidv4(),
-            children: "hello",
+            children: "",
             style: {
               position: "absolute",
               top: 0,

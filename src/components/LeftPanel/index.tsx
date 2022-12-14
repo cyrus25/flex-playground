@@ -2,13 +2,12 @@ import React from "react";
 import useStore from "../../store";
 
 export default function () {
-  const { rootNode } = useStore();
+  const { rootNode, selectedNodeRef } = useStore();
 
   const createReactElements = (node) => {
     console.log("mynode", node);
 
     if (!node.props.children) {
-      console.log("in left jode");
       return null;
     }
 
