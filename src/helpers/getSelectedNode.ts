@@ -1,4 +1,6 @@
-export default function getSelectedNode(node: any, id: string) {
+import { Node } from "../types/Node.type";
+
+export default function getSelectedNode(node: Node, id: string): Node | null {
   if (node?.props?.key === id) return node;
 
   if (!node?.props?.children) {
@@ -8,12 +10,8 @@ export default function getSelectedNode(node: any, id: string) {
   if (!Array.isArray(node?.props?.children)) {
     return null;
   }
-
-  let selectedNode = null;
-  node?.props?.children.map((nodeItem) => {
-    const value = getSelectedNode(nodeItem, id);
-    console.log("Valuer", value);
-    if (value) selectedNode = value;
+  const selectedNode = node.props.children.find((nodeItem: Node) => {
+    return getSelectedNode(nodeItem, id);
   });
-  return selectedNode;
+  return selectedNode as Node | null;
 }

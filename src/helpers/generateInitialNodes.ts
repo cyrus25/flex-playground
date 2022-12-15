@@ -22,7 +22,7 @@ export const generateInitialNodes = () => {
           currentSelectedDomNode.style.borderWidth = "2px";
         }
         const domNode: any = elementRef.current;
-        domNode.style.borderColor = "#475569";
+        domNode.style.borderColor = "rgb(107 114 128)";
         domNode.style.borderWidth = "3px";
         useStore.setState({ selectedNodeId: key });
         useStore.setState({ selectedNodeRef: elementRef });
@@ -37,6 +37,9 @@ export const generateInitialNodes = () => {
         borderWidth: "1px",
         justifyContent: "flex-start",
         alignItems: "flex-start",
+        direction: "ltr",
+        alignContent: "stretch",
+        alignSelf: "auto",
         borderColor: "white",
       },
       children: [

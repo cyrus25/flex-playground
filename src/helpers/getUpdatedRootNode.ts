@@ -4,10 +4,11 @@ export default function getUpdatedRootNode(
   property: string,
   value: string
 ) {
-  if (!node.props.children) {
-    return {};
-  }
+  console.log("yos node", { node });
 
+  if (!node.props.children) {
+    return node;
+  }
   if (!Array.isArray(node?.props.children)) {
     return { ...node };
   }
